@@ -11,6 +11,7 @@ int main(void)
 	size_t len = 0;
 	pid_t pid;
 	int status;
+	char *argv[2];
 
 	while (1)
 	{
@@ -31,7 +32,8 @@ int main(void)
 
 		if (pid == 0)
 		{
-			char *argv[] = {line, NULL};
+			argv[0] = line;
+			argv[1] = NULL;
 
 			execve(line, argv, environ);
 			perror("./shell");
