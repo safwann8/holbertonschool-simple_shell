@@ -1,51 +1,47 @@
 #include "shell.h"
 
 /**
-* main - Entry point of the simple shell
-* @argc: Number of arguments (unused)
-* @argv: Array of arguments
-* Return: The exit status of the last command executed
-*/
-
-int main(int argc, char **argv)
+ * main - Simple UNIX command line interpreter
+ *
+ * Return: Always 0
+ */
+int main(void)
 {
-	char *line, **args;
-	int i, command_count = 1, len, status = 0;
-	(void)argc;
+	char *line = NULL;
+	size_t len = 0;
+	pid_t pid;
+	int status;
+	char *argv[2];
 
 	while (1)
 	{
-		print_prompt();
-		line = read_line();
-		if (line == NULL)
-		{
-			if (isatty(STDIN_FILENO))
-				printf("\n");
-			break;
-		}
-		for (i = 0; line[i] == ' ' || line[i] == '\t';)
-			i++;
-		if (line[i] == '\0')
-		{
-			free(line);
-			continue;
-		}
-		len = strlen(line);
-		for (; len > i && (line[len - 1] == ' ' || line[len - 1] == '\t'); len--)
-			line[len - 1] = '\0';
+		write(STDOUT_FILENO, "#cisfun$ ", 9);
 
-		args = parse_line(line + i);
-		if (args && args[0])
+		if (getline(&line, &len, stdin) == -1)
 		{
-			if (execute_command(args, argv[0], command_count, &status))
-			{
-				handle_exit_command(args, line);
-				break;
-			}
+			write(STDOUT_FILENO, "\n", 1);
+			free(line);
+			return (0);
 		}
-		free_args(args);
-		command_count++;
-		free(line);
+
+		line[strcspn(line, "\n")] = '\0';
+
+		pid = fork();
+		if (pid == -1)
+			return (1);
+
+		if (pid == 0)
+		{
+			argv[0] = line;
+			argv[1] = NULL;
+
+			execve(line, argv, environ);
+			perror("./shell");
+			exit(1);
+		}
+		else
+		{
+			wait(&status);
+		}
 	}
-	return (status);
 }
