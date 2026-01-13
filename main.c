@@ -26,6 +26,25 @@ char *trim_spaces(char *str)
 }
 
 /**
+ * split_line - Split a line into arguments
+ * @line: Command line
+ * @argv: Argument vector
+ */
+void split_line(char *line, char **argv)
+{
+	int i = 0;
+	char *token;
+
+	token = strtok(line, " \t");
+	while (token && i < 1023)
+	{
+		argv[i++] = token;
+		token = strtok(NULL, " \t");
+	}
+	argv[i] = NULL;
+}
+
+/**
  * main - Simple UNIX command line interpreter
  *
  * Return: Always 0
@@ -37,7 +56,7 @@ int main(void)
 	size_t len = 0;
 	pid_t pid;
 	int status;
-	char *argv[2];
+	char *argv[1024];
 
 	while (1)
 	{
@@ -58,6 +77,8 @@ int main(void)
 		if (*cmd == '\0')
 			continue;
 
+		split_line(cmd, argv);
+
 		pid = fork();
 		if (pid == -1)
 		{
@@ -67,10 +88,7 @@ int main(void)
 
 		if (pid == 0)
 		{
-			argv[0] = cmd;
-			argv[1] = NULL;
-
-			execve(cmd, argv, environ);
+			execve(argv[0], argv, environ);
 			perror("./hsh");
 			exit(1);
 		}
