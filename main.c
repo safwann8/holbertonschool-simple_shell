@@ -45,6 +45,31 @@ void split_line(char *line, char **argv)
 }
 
 /**
+ * execute_cmd - Fork and execute a command
+ * @argv: Argument vector
+ */
+void execute_cmd(char **argv)
+{
+	pid_t pid;
+	int status;
+
+	pid = fork();
+	if (pid == -1)
+		return;
+
+	if (pid == 0)
+	{
+		execve(argv[0], argv, environ);
+		perror("./hsh");
+		exit(1);
+	}
+	else
+	{
+		wait(&status);
+	}
+}
+
+/**
  * main - Simple UNIX command line interpreter
  *
  * Return: Always 0
@@ -54,8 +79,6 @@ int main(void)
 	char *line = NULL;
 	char *cmd;
 	size_t len = 0;
-	pid_t pid;
-	int status;
 	char *argv[1024];
 
 	while (1)
@@ -78,23 +101,6 @@ int main(void)
 			continue;
 
 		split_line(cmd, argv);
-
-		pid = fork();
-		if (pid == -1)
-		{
-			free(line);
-			return (1);
-		}
-
-		if (pid == 0)
-		{
-			execve(argv[0], argv, environ);
-			perror("./hsh");
-			exit(1);
-		}
-		else
-		{
-			wait(&status);
-		}
+		execute_cmd(argv);
 	}
 }
