@@ -4,7 +4,7 @@
  * trim_spaces - Remove leading and trailing spaces and tabs
  * @str: String to trim
  *
- * Return: Trimmed string
+ * Return: Pointer to trimmed string
  */
 char *trim_spaces(char *str)
 {
@@ -33,6 +33,7 @@ char *trim_spaces(char *str)
 int main(void)
 {
 	char *line = NULL;
+	char *cmd;
 	size_t len = 0;
 	pid_t pid;
 	int status;
@@ -52,21 +53,24 @@ int main(void)
 		}
 
 		line[strcspn(line, "\n")] = '\0';
-		line = trim_spaces(line);
+		cmd = trim_spaces(line);
 
-		if (*line == '\0')
+		if (*cmd == '\0')
 			continue;
 
 		pid = fork();
 		if (pid == -1)
+		{
+			free(line);
 			return (1);
+		}
 
 		if (pid == 0)
 		{
-			argv[0] = line;
+			argv[0] = cmd;
 			argv[1] = NULL;
 
-			execve(line, argv, environ);
+			execve(cmd, argv, environ);
 			perror("./hsh");
 			exit(1);
 		}
