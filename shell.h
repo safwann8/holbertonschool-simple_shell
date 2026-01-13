@@ -4,9 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/wait.h>
 #include <string.h>
+#include <sys/wait.h>
+#include <sys/stat.h>
 
 extern char **environ;
+
+char *trim_spaces(char *str);
+void split_line(char *line, char **argv);
+void execute_cmd(char **argv);
+char *get_path_cmd(char *cmd);
 
 #endif
