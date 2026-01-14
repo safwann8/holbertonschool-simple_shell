@@ -35,6 +35,9 @@ int main(void)
 			continue;
 
 		split_line(cmd, argv);
+
+		handle_builtins(argv, line);
+
 		execute_cmd(argv, line_count);
 	}
 }
