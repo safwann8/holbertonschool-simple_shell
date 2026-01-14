@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 
 extern char **environ;
+extern int last_status;
 
 char *trim_spaces(char *str);
 void split_line(char *line, char **argv);

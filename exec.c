@@ -1,5 +1,7 @@
 #include "shell.h"
 
+int last_status = 0;
+
 /**
  * execute_cmd - Fork and execute a command
  * @argv: Argument vector
@@ -16,7 +18,8 @@ void execute_cmd(char **argv, unsigned int line_count)
 	{
 		fprintf(stderr, "./hsh: %u: %s: not found\n",
 			line_count, argv[0]);
-		exit(127);
+		last_status = 127;
+		return;
 	}
 
 	pid = fork();
@@ -24,6 +27,7 @@ void execute_cmd(char **argv, unsigned int line_count)
 	{
 		if (path != argv[0])
 			free(path);
+		last_status = 1;
 		return;
 	}
 
@@ -36,6 +40,11 @@ void execute_cmd(char **argv, unsigned int line_count)
 	else
 	{
 		wait(&status);
+		if (WIFEXITED(status))
+			last_status = WEXITSTATUS(status);
+		else
+			last_status = 1;
+
 		if (path != argv[0])
 			free(path);
 	}

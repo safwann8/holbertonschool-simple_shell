@@ -12,7 +12,7 @@ int handle_builtins(char **argv, char *line)
 	if (strcmp(argv[0], "exit") == 0)
 	{
 		free(line);
-		exit(0);
+		exit(last_status);
 	}
 	return (0);
 }
