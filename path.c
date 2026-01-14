@@ -1,6 +1,28 @@
 #include "shell.h"
 
 /**
+ * get_env_path - Get PATH value from environ
+ *
+ * Return: PATH string or NULL
+ */
+char *get_env_path(void)
+{
+	int i = 0;
+	char *path;
+
+	while (environ[i])
+	{
+		if (strncmp(environ[i], "PATH=", 5) == 0)
+		{
+			path = environ[i] + 5;
+			return (path);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+/**
  * get_path_cmd - Search command in PATH
  * @cmd: Command name
  *
@@ -14,7 +36,7 @@ char *get_path_cmd(char *cmd)
 	if (stat(cmd, &st) == 0)
 		return (cmd);
 
-	path = getenv("PATH");
+	path = get_env_path();
 	if (!path)
 		return (NULL);
 
