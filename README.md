@@ -95,19 +95,19 @@ echo "/bin/ls" | ./hsh
 These are a few examples of how our code works:
 if we want to show a list :
 
-![ls](images/test_ls.png)
+![ls](images/test_ls simple shell.png)
 
 if we want to see an advanced list:
 
-![ls -l](images/test_ls -l.png)
+![ls -l](images/test_ls -l simple shell.png)
 
 if we want to see the exit:
 
-![exit](images/test_exit.png)
+![exit](images/test_exit simple shell.png)
 
 if we want to see the environment :
 
-![environmen](images/test_env.png)
+![environmen](images/test_env simple shell.png)
 
 
 
