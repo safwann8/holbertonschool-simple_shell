@@ -15,5 +15,6 @@ void split_line(char *line, char **argv);
 void execute_cmd(char **argv, unsigned int line_count);
 char *get_path_cmd(char *cmd);
 char *get_env_path(void);
+int handle_builtins(char **argv, char *line);
 
 #endif
