@@ -115,7 +115,9 @@ if we want to see the environment :
 
 ## Flowchart
 
-![Flowchart](images/floowchart.png)
+![Flowchart](images/floowchart1.png)
+
+![Flowchart](images/floowchart2.png)
 
 
 The following flowchart illustrates the process of the simple shell.
