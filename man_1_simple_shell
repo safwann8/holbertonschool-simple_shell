@@ -1,0 +1,101 @@
+.TH HSH 1 "January 2026" "Holberton School" "User Commands"
+.SH NAME
+hsh \- simple UNIX command line interpreter
+
+.SH SYNOPSIS
+.B hsh
+.RI [ command ]
+
+.SH DESCRIPTION
+.B hsh
+is a simple UNIX command line interpreter written in C.
+
+It displays a prompt and waits for the user to type a command.
+The command line is executed and the prompt is displayed again.
+
+The shell works in both interactive and non-interactive modes.
+
+.SH INVOCATION
+.B Interactive mode
+.br
+When hsh is started without arguments, it runs in interactive mode
+and displays a prompt.
+
+.EX
+$ ./hsh
+($) ls
+file1 file2
+($) exit
+.EE
+
+.B Non-interactive mode
+.br
+Commands can be piped into hsh.
+
+.EX
+$ echo "ls" | ./hsh
+file1 file2
+.EE
+
+.SH BUILTINS
+The following built-in commands are implemented:
+
+.TP
+.B exit
+Exit the shell.
+If no argument is provided, the shell exits with the status of the
+last executed command.
+
+.TP
+.B env
+Print the current environment variables, one per line.
+
+.SH COMMAND EXECUTION
+hsh executes commands found in the directories listed in the
+.B PATH
+environment variable.
+
+If a command is not found, an error message is printed to standard error.
+
+.SH ENVIRONMENT
+The shell uses the following environment variables:
+
+.TP
+.B PATH
+Specifies the directories to search for executable commands.
+
+.TP
+.B SHLVL
+Shell level.
+
+.SH RETURN VALUE
+hsh returns the exit status of the last command executed.
+If a command is not found, the return status is 127.
+
+.SH ERRORS
+When a command cannot be found, hsh prints an error message in the
+following format:
+
+.EX
+./hsh: <line_number>: <command>: not found
+.EE
+
+.SH LIMITATIONS
+This shell does not support:
+.IP
+- Command separators (;)
+.IP
+- Pipes (|)
+.IP
+- Redirections (<, >, >>)
+.IP
+- Wildcards (*)
+.IP
+- Quotes or escape characters
+
+.SH AUTHORS
+Written by Holberton School students.
+
+.SH SEE ALSO
+.BR sh (1),
+.BR bash (1)
