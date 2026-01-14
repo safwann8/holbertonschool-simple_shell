@@ -7,6 +7,7 @@
  */
 int main(void)
 {
+	unsigned int line_count = 0;
 	char *line = NULL;
 	char *cmd;
 	size_t len = 0;
@@ -25,6 +26,8 @@ int main(void)
 			return (0);
 		}
 
+		line_count++;
+
 		line[strcspn(line, "\n")] = '\0';
 		cmd = trim_spaces(line);
 
@@ -32,6 +35,6 @@ int main(void)
 			continue;
 
 		split_line(cmd, argv);
-		execute_cmd(argv);
+		execute_cmd(argv, line_count);
 	}
 }
