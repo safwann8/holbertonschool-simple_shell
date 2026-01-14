@@ -1,10 +1,9 @@
-.TH HSH 1 "January 2026" "Holberton School" "User Commands"
+.TH HSH 1 "January 2026" "Holberton School" "Simple Shell Manual"
 .SH NAME
 hsh \- simple UNIX command line interpreter
 
 .SH SYNOPSIS
 .B hsh
-.RI [ command ]
 
 .SH DESCRIPTION
 .B hsh
@@ -27,6 +26,7 @@ $ ./hsh
 file1 file2
 ($) exit
 .EE
+($) env
 
 .B Non-interactive mode
 .br
@@ -94,7 +94,7 @@ This shell does not support:
 - Quotes or escape characters
 
 .SH AUTHORS
-Written by Holberton School students.
+Belkacem Fillali Safwan - Holberton School
 
 .SH SEE ALSO
 .BR sh (1),
