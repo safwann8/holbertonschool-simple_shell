@@ -133,8 +133,6 @@ in order to open the man page we need to run  man:
 ./man_1_simple_shell
 
 
-
-
 ## Authors
 	•	Safwan Belkacem Fillali
     
