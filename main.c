@@ -36,7 +36,9 @@ int main(void)
 
 		split_line(cmd, argv);
 
-		handle_builtins(argv, line);
+		/* Handle built-ins first */
+		if (handle_builtins(argv, line))
+			continue;
 
 		execute_cmd(argv, line_count);
 	}
